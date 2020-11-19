@@ -1,5 +1,6 @@
 from display import *
 import networkx as nx
+import random
 
 
 def game(player_type: str, opponent_type: str) -> float:
@@ -32,27 +33,38 @@ def gen_dilemma_uscale_graph(nodes: int, dilemma: str) -> nx.Graph:
     return G
 
 
-def update_node_type(G: nx.Graph, node: int, node_type: str, fit: float) -> None:
-    # TODO update node type dependent on influence of neighbours
-    pass
+def update_node_type(G: nx.Graph, node: int) -> None:
+    neighbour = random.choice(list(G[node]))
+    if G.nodes[neighbour]["fit"] > G.nodes[node]["fit"]:
+        G.nodes[node]["type"] = G.nodes[neighbour]["type"]
 
 
 def simulate(G: nx.Graph, iterations: int, step: int = 1) -> None:
     for i in range(0, iterations, step):
         for node in G.nodes():
             fit = G.nodes[node]["fit"] * i + node_fitness(G, node)
-            update_node_type(G, node, G.nodes[node]["type"], fit)
+            G.nodes[node]["fit"] = fit / (i + 1)
+        for node in G.nodes():
+            update_node_type(G, node)
     graph_display(G, {"inline": True, "node_labeled": True})
 
 
 def random_entropy(G: nx.Graph, changes: int, dilemma: str) -> None:
-    # TODO choose random players and flip their type
-    pass
+    nodes = random.choices(list(G.nodes), k=changes)
+    for i in nodes:
+        G.nodes[i]["type"] = dilemma
 
 
 def biggest_hubs_entropy(G: nx.Graph, changes: int, dilemma: str) -> None:
-    # TODO choose biggest hubs and flip their type
-    pass
+    degrees = sorted(list(set([d for _, d in G.degree()])), reverse=True)
+    to_change = changes
+    while to_change != 0:
+        for node in G.nodes():
+            if G.degree[node] == degrees[0]:
+                G.nodes[node]["type"] = dilemma
+                to_change -= 1
+            if to_change == 0: return
+        degrees.pop(0)
 
 
 def population_entropy(G: nx.Graph, changes: int, strategy: str, dilemma: str) -> None:
@@ -65,6 +77,5 @@ def population_entropy(G: nx.Graph, changes: int, strategy: str, dilemma: str) -
 
 """ 
 Falta as funcoes todas dos resultados que queremos arranjar;
-Falta como  dar o update segundo a influência;
 Falta possiveis funcoes de parse e storage de imagens e resultados.
 """
