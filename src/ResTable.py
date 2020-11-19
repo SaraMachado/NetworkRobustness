@@ -29,7 +29,7 @@ class ResTable:
                 new_line[1] += 1
 
         new_line[2] = new_line[0] / G.number_of_nodes()
-        new_line[3] = new_line[0] / G.number_of_nodes()
+        new_line[3] = new_line[1] / G.number_of_nodes()
 
         self.rows.append("Iteration: {}".format(iteration))
         self.data.append(new_line)
