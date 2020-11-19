@@ -33,7 +33,7 @@ def gen_dilemma_uscale_graph(nodes: int, dilemma: str) -> nx.Graph:
 
 
 def update_node_type(G: nx.Graph, node: int, node_type: str, fit: float) -> None:
-    # TODO
+    # TODO update node type dependent on influence of neighbours
     pass
 
 
@@ -43,6 +43,24 @@ def simulate(G: nx.Graph, iterations: int, step: int = 1) -> None:
             fit = G.nodes[node]["fit"] * i + node_fitness(G, node)
             update_node_type(G, node, G.nodes[node]["type"], fit)
     graph_display(G, {"inline": True, "node_labeled": True})
+
+
+def random_entropy(G: nx.Graph, changes: int, dilemma: str) -> None:
+    # TODO choose random players and flip their type
+    pass
+
+
+def biggest_hubs_entropy(G: nx.Graph, changes: int, dilemma: str) -> None:
+    # TODO choose biggest hubs and flip their type
+    pass
+
+
+def population_entropy(G: nx.Graph, changes: int, strategy: str, dilemma: str) -> None:
+    # TODO add all strategies if more
+    if strategy == "random":
+        random_entropy(G, changes, dilemma)
+    elif strategy == "biggest_hubs":
+        biggest_hubs_entropy(G, changes, dilemma)
 
 
 """ 
