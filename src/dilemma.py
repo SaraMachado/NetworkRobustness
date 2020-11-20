@@ -52,19 +52,14 @@ def simulate(G: nx.Graph, iterations: int, step: int = 1) -> None:
 def random_entropy(G: nx.Graph, changes: int, dilemma: str) -> None:
     nodes = random.choices(list(G.nodes), k=changes)
     for i in nodes:
-        G.nodes[i]["type"] = dilemma
+        G.nodes[i]["type"] = ('C', 'D')[dilemma == 'C']
 
 
 def biggest_hubs_entropy(G: nx.Graph, changes: int, dilemma: str) -> None:
-    degrees = sorted(list(set([d for _, d in G.degree()])), reverse=True)
-    to_change = changes
-    while to_change != 0:
-        for node in G.nodes():
-            if G.degree[node] == degrees[0]:
-                G.nodes[node]["type"] = dilemma
-                to_change -= 1
-            if to_change == 0: return
-        degrees.pop(0)
+    degrees = sorted([(n, d) for n, d in G.degree()], key=lambda pair: pair[1], reverse=True)
+
+    for n, _ in degrees[:changes]:
+        G.nodes[n]["type"] = ('C', 'D')[dilemma == 'C']
 
 
 def population_entropy(G: nx.Graph, changes: int, strategy: str, dilemma: str) -> None:
