@@ -46,7 +46,8 @@ def simulate(G: nx.Graph, iterations: int, step: int = 1) -> None:
             G.nodes[node]["fit"] = fit / (i + 1)
         for node in G.nodes():
             update_node_type(G, node)
-    graph_display(G, {"inline": True, "node_labeled": True})
+    #graph_display(G, {"inline": True, "node_labeled": True})
+    # figure out when to save image lmao
 
 
 def random_entropy(G: nx.Graph, changes: int, dilemma: str) -> None:
@@ -68,9 +69,10 @@ def population_entropy(G: nx.Graph, changes: int, strategy: str, dilemma: str) -
         random_entropy(G, changes, dilemma)
     elif strategy == "biggest_hubs":
         biggest_hubs_entropy(G, changes, dilemma)
-
+    """ Maybe with degree distribution ???? lmao"""
 
 """ 
 Falta as funcoes todas dos resultados que queremos arranjar;
 Falta possiveis funcoes de parse e storage de imagens e resultados.
+Alterar display.py para colorir os nos de acordo com cenas que queiramos
 """
