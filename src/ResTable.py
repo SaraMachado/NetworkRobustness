@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import networkx as nx
+import csv
 
 
 class ResTable:
@@ -8,7 +9,7 @@ class ResTable:
         self.data = []
         self.columns = ['# Defectors',
                         '# Cooperators',
-                        '% Defector',
+                        '% Defectors',
                         '% Cooperators',
                         'Avg Fit Level',
                         'Max Fit Level']
@@ -53,12 +54,19 @@ class ResTable:
         plt.box(on=None)
 
         table = plt.table(cellText=cell_text,
-                              rowLabels=self.rows,
-                              colLabels=self.columns,
-                              loc='center')
+                          rowLabels=self.rows,
+                          colLabels=self.columns,
+                          loc='center')
         table.scale(1, 1.5)
         if title is not None: plt.title(title)
         plt.show()
+
+    def save(self, filename: str):
+        """filename: size + dillema: D|C + strategy: R|H + .csv"""
+        with open('../results/csv/{}.csv'.format(filename), 'w', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file, delimiter=',')
+            csv_writer.writerow(self.columns)
+            csv_writer.writerows(self.data)
 
     def clear(self):
         self.data.clear()

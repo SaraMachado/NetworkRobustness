@@ -1,6 +1,11 @@
+import csv
+import os
+
 from display import *
 import networkx as nx
+import ResTable
 import random
+from matplotlib.legend_handler import HandlerLine2D
 
 
 def game(player_type: str, opponent_type: str) -> float:
@@ -70,6 +75,42 @@ def population_entropy(G: nx.Graph, changes: int, strategy: str, dilemma: str) -
     elif strategy == "biggest_hubs":
         biggest_hubs_entropy(G, changes, dilemma)
     """ Maybe with degree distribution ???? lmao"""
+
+
+"""def generate_results() -> dict:
+   #filename: size + dillema: D|C + strategy: R|H + .csv
+    results = {}
+    for filename in os.listdir("../results/csv"):
+        cop, defec = [], []
+        with open('../results/csv/{}'.format(filename), 'r', newline='') as csv_file:
+            reader = csv.DictReader(csv_file)
+            for row in reader:
+                cop.append(row["% Cooperators"])
+                defec.append("% Defectors")
+        results[filename[:-6]][filename[-6:-4]] = lol
+    return results"""
+
+
+def robustness_analysis(results: dict) -> None:
+    """{1000: {'CR': float, 'CH': float, 'DR': float, 'DH': float},...}"""
+    rob_cop_ran, rob_cop_hub, rob_def_ran, rob_def_hub, = [], [], [], []
+
+    for size in results.keys():
+        rob_cop_ran.append(results.get(size)['CR'])
+        rob_cop_hub.append(results.get(size)['CH'])
+        rob_def_ran.append(results.get(size)['DR'])
+        rob_def_hub.append(results.get(size)['DH'])
+
+    line1, = plt.plot(list(results.keys()), rob_cop_ran, label="Percentage Cooperators Random Strategy")
+    plt.plot(list(results.keys()), rob_cop_hub, label="Percentage Cooperators Biggest Hubs Strategy")
+    plt.plot(list(results.keys()), rob_def_ran, label="Percentage Defectors Random Strategy")
+    plt.plot(list(results.keys()), rob_def_hub, label="Percentage Defectors Biggest Hubs Strategy")
+
+    plt.legend(handler_map={line1: HandlerLine2D(numpoints=4)})
+    plt.yticks(np.arange(0, 1, 0.5))
+    #plt.savefig("../results/RA.png")
+    plt.show()
+
 
 """ 
 Falta as funcoes todas dos resultados que queremos arranjar;
