@@ -29,16 +29,16 @@ class ResTable:
             else:
                 new_line[1] += 1
 
-        new_line[2] = new_line[0] / G.number_of_nodes()
-        new_line[3] = new_line[1] / G.number_of_nodes()
+        new_line[2] = new_line[0] / G.number_of_nodes() * 100
+        new_line[3] = new_line[1] / G.number_of_nodes() * 100
 
         self.rows.append("Iteration: {}".format(iteration))
         self.data.append(new_line)
 
     def generate_table(self, title=None):
-        y_offset = np.zeros(len(self.columns))
         cell_text = []
         for row in range(len(self.rows)):
+            y_offset = np.zeros(len(self.columns))
             y_offset = y_offset + self.data[row]
             line = []
             for i in range(len(self.columns)):
