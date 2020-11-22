@@ -34,3 +34,7 @@ def graph_display(G: nx.Graph, options: dict) -> None:
     plt.axis("off")
     #plt.savefig("../results/GD_{}.png".format(year))
     plt.show()
+
+
+def graph_save(G: nx.Graph, n: int):
+    nx.write_gexf(G, "../results/graph_size{}.gexf".format(n))
