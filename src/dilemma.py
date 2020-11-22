@@ -23,14 +23,14 @@ def node_fitness(G: nx.Graph, node_id: int) -> float:
     return fit / len(G[node_id])
 
 
-def gen_dilemma_uscale_graph(nodes: int, dilemma: str) -> nx.Graph:
-    G = nx.scale_free_graph(nodes).to_undirected()
+def gen_dilemma_uscale_graph(nodes: int) -> nx.Graph:
+    return nx.scale_free_graph(nodes).to_undirected()
 
+
+def setup(G: nx.Graph, dilemma: str):
     for node in G.nodes():
         G.nodes[node]["type"] = dilemma
         G.nodes[node]["fit"] = 0
-
-    return G
 
 
 def update_node_type(G: nx.Graph, node: int) -> None:
@@ -39,8 +39,8 @@ def update_node_type(G: nx.Graph, node: int) -> None:
         G.nodes[node]["type"] = G.nodes[neighbour]["type"]
 
 
-def simulate(G: nx.Graph, iterations: int, step: int = 1) -> None:
-    for i in range(0, iterations, step):
+def simulate(G: nx.Graph, iterations: int) -> None:
+    for i in range(iterations):
         for node in G.nodes():
             fit = G.nodes[node]["fit"] * i + node_fitness(G, node)
             G.nodes[node]["fit"] = fit / (i + 1)
