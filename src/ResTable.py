@@ -15,7 +15,7 @@ class ResTable:
                         'Max Fit Level']
         self.rows = []
 
-    def add_line(self, G: nx.Graph, iteration: int):
+    def add_line(self, G: nx.Graph, per_changes: float):
         # [#Defectors, #Cooperators, %Defectors, %Cooperators, Avg Fit, Max Fit]
         new_line = [0] * len(self.columns)
 
@@ -32,7 +32,7 @@ class ResTable:
         new_line[2] = new_line[0] / G.number_of_nodes() * 100
         new_line[3] = new_line[1] / G.number_of_nodes() * 100
 
-        self.rows.append("Iteration: {}".format(iteration))
+        self.rows.append("% Changes: {}".format(per_changes))
         self.data.append(new_line)
 
     def generate_table(self, title=None):
