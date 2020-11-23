@@ -44,15 +44,24 @@ def update_node_type(G: nx.Graph, node: int) -> None:
         G.nodes[node]["type"] = G.nodes[neighbour]["type"]
 
 
-def simulate(G: nx.Graph, iterations: int) -> None:
+def simulate(G: nx.Graph, iterations: int, dilemma: str) -> bool:
     for i in range(iterations):
         for node in G.nodes():
             fit = G.nodes[node]["fit"] * i + node_fitness(G, node)
             G.nodes[node]["fit"] = fit / (i + 1)
         for node in G.nodes():
             update_node_type(G, node)
+
+        if is_changed(G, dilemma): return True
+    return False
     # graph_display(G, {"inline": True, "node_labeled": True})
     # figure out when to save image lmao
+
+
+def is_changed(G: nx.Graph, dilemma: str) -> bool:
+    for node in G.nodes():
+        if G.nodes[node]["fit"] == dilemma: return False
+    return True
 
 
 def random_entropy(G: nx.Graph, changes: int, dilemma: str) -> None:
