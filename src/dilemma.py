@@ -51,7 +51,7 @@ def simulate(G: nx.Graph, iterations: int) -> None:
             G.nodes[node]["fit"] = fit / (i + 1)
         for node in G.nodes():
             update_node_type(G, node)
-    #graph_display(G, {"inline": True, "node_labeled": True})
+    # graph_display(G, {"inline": True, "node_labeled": True})
     # figure out when to save image lmao
 
 
@@ -77,21 +77,19 @@ def population_entropy(G: nx.Graph, changes: int, strategy: str, dilemma: str) -
     """ Maybe with degree distribution ???? lmao"""
 
 
-"""def generate_results() -> dict:
-   #filename: size + dillema: D|C + strategy: R|H + .csv
+def generate_results() -> dict:
+    # filename: size + dilemma: D|C + strategy: R|H + .csv
     results = {}
-    for filename in os.listdir("../results/csv"):
-        cop, defec = [], []
-        with open('../results/csv/{}'.format(filename), 'r', newline='') as csv_file:
-            reader = csv.DictReader(csv_file)
-            for row in reader:
-                cop.append(row["% Cooperators"])
-                defec.append("% Defectors")
-        results[filename[:-6]][filename[-6:-4]] = lol
-    return results"""
+    with open('../results/output.csv', 'r', newline='') as csv_file:
+        reader = csv.DictReader(csv_file)
+        for row in reader:
+            size = row["graph_name"][:-2]
+            types = row["graph_name"][-2:]
+            results[size][types] = row["percentage"]
+    return results
 
 
-def robustness_analysis(results: dict) -> None:
+def robustness_analysis(results: dict, version: str = "") -> None:
     """{1000: {'CR': float, 'CH': float, 'DR': float, 'DH': float},...}"""
     rob_cop_ran, rob_cop_hub, rob_def_ran, rob_def_hub, = [], [], [], []
 
@@ -108,7 +106,7 @@ def robustness_analysis(results: dict) -> None:
 
     plt.legend(handler_map={line1: HandlerLine2D(numpoints=4)})
     plt.yticks(np.arange(0, 1, 0.5))
-    #plt.savefig("../results/RA.png")
+    plt.savefig("../results/RA{}.png".format(version))
     plt.show()
 
 
