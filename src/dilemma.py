@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 import random
+from math import exp
 from matplotlib.legend_handler import HandlerLine2D
 from display import *
 
@@ -37,23 +38,33 @@ def setup(G: nx.Graph, dilemma: str):
         G.nodes[node]["fit"] = 0
 
 
-def update_node_type(G: nx.Graph, node: int) -> None:
-    neighbour = random.choice(list(G[node]))
+def probability_change(neighbour_fit: float, node_fit: float) -> bool:
+    beta = 0.04
+    p = pow(1 + pow(exp(1), - beta * (neighbour_fit-node_fit)), -1)
+    return random.random() <= p
 
-    if G.nodes[node]["type"] == G.nodes[neighbour]["type"]: return
 
-    if G.nodes[neighbour]["fit"] > G.nodes[node]["fit"]:
-        G.nodes[node]["type"] = G.nodes[neighbour]["type"]
+def update_nodes_type(G: nx.Graph) -> None:
+    to_change = []
+    for node in G.nodes():
+        neighbour = random.choice(list(G[node]))
+
+        if G.nodes[node]["type"] == G.nodes[neighbour]["type"]: return
+
+        if probability_change(G.nodes[neighbour]["fit"], G.nodes[node]["fit"]):
+            to_change.append(node)
+
+    for node in to_change:
+        G.nodes[node]["type"] = ('C', 'D')[G.nodes[node]["type"] == 'D']
 
 
 def simulate(G: nx.Graph, iterations: int, dilemma: str) -> bool:
     for i in range(iterations):
-        graph_display(G, {"inline": True, "node_labeled": True})
+        # graph_display(G, {"inline": True, "node_labeled": True})
         for node in G.nodes():
             fit = G.nodes[node]["fit"] * i + node_fitness(G, node)
             G.nodes[node]["fit"] = fit / (i + 1)
-        for node in G.nodes():
-            update_node_type(G, node)
+        update_nodes_type(G)
 
         if is_changed(G, dilemma): return True
     return False
@@ -119,6 +130,6 @@ def robustness_analysis(results: dict, version: str = "") -> None:
     plt.plot(list(results.keys()), rob_def_hub, label="Percentage Defectors Biggest Hubs Strategy")
 
     plt.legend(handler_map={line1: HandlerLine2D(numpoints=4)})
-    plt.yticks(np.arange(0, 1, 0.5))
+    plt.yticks(np.linspace(0.00, 1.00, num=10))
     plt.savefig("../results/RA_{}.png".format(version))
     plt.show()
