@@ -1,9 +1,7 @@
 import csv
-import os
-
-from display import *
+import matplotlib.pyplot as plt
 import networkx as nx
-import ResTable
+import numpy as np
 import random
 from matplotlib.legend_handler import HandlerLine2D
 
@@ -40,6 +38,9 @@ def setup(G: nx.Graph, dilemma: str):
 
 def update_node_type(G: nx.Graph, node: int) -> None:
     neighbour = random.choice(list(G[node]))
+
+    if G.nodes[node]["type"] == G.nodes[neighbour]["type"]: return
+
     if G.nodes[neighbour]["fit"] > G.nodes[node]["fit"]:
         G.nodes[node]["type"] = G.nodes[neighbour]["type"]
 
@@ -54,13 +55,13 @@ def simulate(G: nx.Graph, iterations: int, dilemma: str) -> bool:
 
         if is_changed(G, dilemma): return True
     return False
-    # graph_display(G, {"inline": True, "node_labeled": True})
     # figure out when to save image lmao
 
 
 def is_changed(G: nx.Graph, dilemma: str) -> bool:
     for node in G.nodes():
-        if G.nodes[node]["fit"] == dilemma: return False
+        if G.nodes[node]["type"] == dilemma:
+            return False
     return True
 
 
@@ -94,6 +95,8 @@ def generate_results() -> dict:
         for row in reader:
             size = row["graph_name"][:-2]
             types = row["graph_name"][-2:]
+            if size not in results.keys():
+                results[size] = {}
             results[size][types] = row["percentage"]
     return results
 
@@ -115,12 +118,5 @@ def robustness_analysis(results: dict, version: str = "") -> None:
 
     plt.legend(handler_map={line1: HandlerLine2D(numpoints=4)})
     plt.yticks(np.arange(0, 1, 0.5))
-    plt.savefig("../results/RA{}.png".format(version))
+    plt.savefig("../results/RA_{}.png".format(version))
     plt.show()
-
-
-""" 
-Falta as funcoes todas dos resultados que queremos arranjar;
-Falta possiveis funcoes de parse e storage de imagens e resultados.
-Alterar display.py para colorir os nos de acordo com cenas que queiramos
-"""

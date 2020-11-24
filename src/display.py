@@ -7,10 +7,10 @@ def graph_inline(G: nx.Graph, pos: dict) -> None:
     # draw graph in inset
     degrees = G.degree()  # Dict with Node ID, Degree
     nodes = G.nodes()
-    n_color = np.asarray([degrees[n] for n in nodes])
+    n_color = np.asarray([G.nodes[n]["type"] for n in nodes])
     nx.draw_networkx_nodes(G, pos, nodelist=nodes,
                            node_color=n_color, node_size=300,
-                           cmap="Blues", vmin=-8)
+                           cmap=plt.cm.jet, vmin=-8)
     nx.draw_networkx_edges(G, pos, alpha=0.4)
 
 

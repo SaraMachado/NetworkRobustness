@@ -14,6 +14,9 @@ class ResTable:
                         'Avg Fit Level',
                         'Max Fit Level']
         self.rows = []
+        with open("../results/output.csv", "w", newline='') as csv_file:
+            writer = csv.writer(csv_file, delimiter=',')
+            writer.writerow(["graph_name", "percentage"])
 
     def add_line(self, G: nx.Graph, per_changes: float):
         # [#Defectors, #Cooperators, %Defectors, %Cooperators, Avg Fit, Max Fit]
@@ -62,7 +65,7 @@ class ResTable:
         plt.show()
 
     def save(self, filename: str):
-        """filename: size + dillema: D|C + strategy: R|H"""
+        """filename: size + dilemma: D|C + strategy: R|H"""
         with open('../results/output.csv', 'a', newline='') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',')
             csv_writer.writerow([filename, len(self.rows)*0.01])
