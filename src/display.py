@@ -5,12 +5,12 @@ import numpy as np
 
 def graph_inline(G: nx.Graph, pos: dict) -> None:
     # draw graph in inset
-    degrees = G.degree()  # Dict with Node ID, Degree
-    nodes = G.nodes()
-    n_color = np.asarray([G.nodes[n]["type"] for n in nodes])
-    nx.draw_networkx_nodes(G, pos, nodelist=nodes,
-                           node_color=n_color, node_size=300,
-                           cmap=plt.cm.jet, vmin=-8)
+    coop = [node for node in G.nodes if G.nodes[node]["type"] == 'C']
+    defect = [node for node in G.nodes if G.nodes[node]["type"] == 'D']
+    nx.draw_networkx_nodes(G, pos, nodelist=coop,
+                           node_color='b')
+    nx.draw_networkx_nodes(G, pos, nodelist=defect,
+                           node_color='r')
     nx.draw_networkx_edges(G, pos, alpha=0.4)
 
 

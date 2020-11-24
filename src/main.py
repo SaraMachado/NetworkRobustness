@@ -36,7 +36,6 @@ if __name__ == "__main__":
                     G_cpy = G.copy(G)
                     population_entropy(G_cpy, ceil(per_changes * n), t, d)
                     is_changed = simulate(G_cpy, iterations, d)
-                    # graph_display(G_cpy, {"inline": True, "node_labeled": True})
                     res_table.add_line(G_cpy, per_changes)
                 # res_table.generate_table()
                 res_table.save("{}{}{}".format(n, d, ('H', 'R')[t[0].upper() == 'R']))

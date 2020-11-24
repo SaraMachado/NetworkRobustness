@@ -4,6 +4,7 @@ import networkx as nx
 import numpy as np
 import random
 from matplotlib.legend_handler import HandlerLine2D
+from display import *
 
 
 def game(player_type: str, opponent_type: str) -> float:
@@ -27,7 +28,7 @@ def node_fitness(G: nx.Graph, node_id: int) -> float:
 
 
 def gen_dilemma_uscale_graph(nodes: int) -> nx.Graph:
-    return nx.scale_free_graph(nodes).to_undirected()
+    return nx.Graph(nx.scale_free_graph(nodes).to_undirected())
 
 
 def setup(G: nx.Graph, dilemma: str):
@@ -47,6 +48,7 @@ def update_node_type(G: nx.Graph, node: int) -> None:
 
 def simulate(G: nx.Graph, iterations: int, dilemma: str) -> bool:
     for i in range(iterations):
+        graph_display(G, {"inline": True, "node_labeled": True})
         for node in G.nodes():
             fit = G.nodes[node]["fit"] * i + node_fitness(G, node)
             G.nodes[node]["fit"] = fit / (i + 1)
