@@ -119,17 +119,18 @@ def robustness_analysis(results: dict, version: str = "") -> None:
     rob_cop_ran, rob_cop_hub, rob_def_ran, rob_def_hub, = [], [], [], []
 
     for size in results.keys():
-        rob_cop_ran.append(results.get(size)['CR'])
-        rob_cop_hub.append(results.get(size)['CH'])
-        rob_def_ran.append(results.get(size)['DR'])
-        rob_def_hub.append(results.get(size)['DH'])
+        rob_cop_ran.append(float(results.get(size)['CR']))
+        rob_cop_hub.append(float(results.get(size)['CH']))
+        rob_def_ran.append(float(results.get(size)['DR']))
+        rob_def_hub.append(float(results.get(size)['DH']))
 
-    line1, = plt.plot(list(results.keys()), rob_cop_ran, label="Percentage Cooperators Random Strategy")
-    plt.plot(list(results.keys()), rob_cop_hub, label="Percentage Cooperators Biggest Hubs Strategy")
-    plt.plot(list(results.keys()), rob_def_ran, label="Percentage Defectors Random Strategy")
-    plt.plot(list(results.keys()), rob_def_hub, label="Percentage Defectors Biggest Hubs Strategy")
+    keys = [float(i) for i in list(results.keys())]
+    line1, = plt.plot(keys, rob_cop_ran, label="Percentage Cooperators Random Strategy")
+    plt.plot(keys, rob_cop_hub, label="Percentage Cooperators Biggest Hubs Strategy")
+    plt.plot(keys, rob_def_ran, label="Percentage Defectors Random Strategy")
+    plt.plot(keys, rob_def_hub, label="Percentage Defectors Biggest Hubs Strategy")
 
     plt.legend(handler_map={line1: HandlerLine2D(numpoints=4)})
-    plt.yticks(np.linspace(0.00, 1.00, num=10)) # TODO fix this please
+    plt.yticks(np.arange(0, 1.1, 0.1)) # TODO fix this please
     plt.savefig("../results/RA_{}.png".format(version))
     plt.show()
