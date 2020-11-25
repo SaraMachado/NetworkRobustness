@@ -8,7 +8,7 @@ def graph_inline(G: nx.Graph, pos: dict) -> None:
     coop = [node for node in G.nodes if G.nodes[node]["type"] == 'C']
     defect = [node for node in G.nodes if G.nodes[node]["type"] == 'D']
     nx.draw_networkx_nodes(G, pos, nodelist=coop,
-                           node_color='b')
+                           node_color='g')
     nx.draw_networkx_nodes(G, pos, nodelist=defect,
                            node_color='r')
     nx.draw_networkx_edges(G, pos, alpha=0.4)

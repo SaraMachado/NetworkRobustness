@@ -49,13 +49,13 @@ def update_nodes_type(G: nx.Graph) -> None:
     for node in G.nodes():
         neighbour = random.choice(list(G[node]))
 
-        if G.nodes[node]["type"] == G.nodes[neighbour]["type"]: return
+        if G.nodes[node]["type"] == G.nodes[neighbour]["type"]: continue
 
         if probability_change(G.nodes[neighbour]["fit"], G.nodes[node]["fit"]):
             to_change.append(node)
 
     for node in to_change:
-        G.nodes[node]["type"] = ('C', 'D')[G.nodes[node]["type"] == 'D']
+        G.nodes[node]["type"] = ('C', 'D')[G.nodes[node]["type"] == 'C']
 
 
 def simulate(G: nx.Graph, iterations: int, dilemma: str) -> bool:
@@ -130,6 +130,6 @@ def robustness_analysis(results: dict, version: str = "") -> None:
     plt.plot(list(results.keys()), rob_def_hub, label="Percentage Defectors Biggest Hubs Strategy")
 
     plt.legend(handler_map={line1: HandlerLine2D(numpoints=4)})
-    plt.yticks(np.linspace(0.00, 1.00, num=10))
+    plt.yticks(np.linspace(0.00, 1.00, num=10)) # TODO fix this please
     plt.savefig("../results/RA_{}.png".format(version))
     plt.show()
