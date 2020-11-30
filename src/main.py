@@ -21,7 +21,7 @@ if __name__ == "__main__":
     res_table = rt.ResTable()
     types = ["random", "biggest_hubs"]
     dilemmas = ['C', 'D']
-    iterations = 50
+    generations = 50
 
     per_changes = 0
     is_changed = False
@@ -35,7 +35,7 @@ if __name__ == "__main__":
                     per_changes += 0.01
                     G_cpy = G.copy(G)
                     population_entropy(G_cpy, ceil(per_changes * n), t, d)
-                    is_changed = simulate(G_cpy, iterations, d)
+                    is_changed = simulate(G_cpy, generations, d)
                     res_table.add_line(G_cpy, per_changes)
                 # res_table.generate_table()
                 res_table.save("{}{}{}".format(n, d, ('H', 'R')[t[0].upper() == 'R']))

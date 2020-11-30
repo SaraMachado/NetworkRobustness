@@ -29,7 +29,7 @@ def node_fitness(G: nx.Graph, node_id: int) -> float:
 
 
 def gen_dilemma_uscale_graph(nodes: int) -> nx.Graph:
-    return nx.Graph(nx.scale_free_graph(nodes).to_undirected())
+    return nx.barabasi_albert_graph(nodes, random.randint(1, int(nodes / 4)), seed=None)
 
 
 def setup(G: nx.Graph, dilemma: str):
@@ -58,8 +58,8 @@ def update_nodes_type(G: nx.Graph) -> None:
         G.nodes[node]["type"] = ('C', 'D')[G.nodes[node]["type"] == 'C']
 
 
-def simulate(G: nx.Graph, iterations: int, dilemma: str) -> bool:
-    for i in range(iterations):
+def simulate(G: nx.Graph, generations: int, dilemma: str) -> bool:
+    for i in range(generations):
         # graph_display(G, {"inline": True, "node_labeled": True})
         for node in G.nodes():
             fit = G.nodes[node]["fit"] * i + node_fitness(G, node)
@@ -131,6 +131,6 @@ def robustness_analysis(results: dict, version: str = "") -> None:
     plt.plot(keys, rob_def_hub, label="Percentage Defectors Biggest Hubs Strategy")
 
     plt.legend(handler_map={line1: HandlerLine2D(numpoints=4)})
-    plt.yticks(np.arange(0, 1.1, 0.1)) # TODO fix this please
+    plt.yticks(np.arange(0, 1.1, 0.1))
     plt.savefig("../results/RA_{}.png".format(version))
     plt.show()
