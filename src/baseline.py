@@ -18,7 +18,7 @@ if __name__ == "__main__":
         for gen in range(2000):
             # display.graph_display(G, {"inline": True, "node_labeled": True})
             coop = res_table.add_line(G, gen)
-            
+
             if coop == 0:
                 lines.append(gen)
                 break
@@ -29,6 +29,6 @@ if __name__ == "__main__":
             dilemma.update_nodes_type(G)
 
         res_table.save_baseline("baseline_{}".format(i))
-        print(lines)
-        print(max(lines))
-        print(sorted(lines, reverse=True))
+    print(lines)
+    print(max(lines))
+    print(sorted(lines, reverse=True))
