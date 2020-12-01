@@ -18,7 +18,7 @@ class ResTable:
             writer = csv.writer(csv_file, delimiter=',')
             writer.writerow(["graph_name", "percentage"])
 
-    def add_line(self, G: nx.Graph, per_changes: float):
+    def add_line(self, G: nx.Graph, per_changes: float) -> int:
         # [#Defectors, #Cooperators, %Defectors, %Cooperators, Avg Fit, Max Fit]
         new_line = [0] * len(self.columns)
 
@@ -38,6 +38,7 @@ class ResTable:
 
         self.rows.append("% Changes: {}".format(per_changes))
         self.data.append(new_line)
+        return new_line[1]
 
     def generate_table(self, title=None):
         cell_text = []
@@ -62,15 +63,16 @@ class ResTable:
                           colLabels=self.columns,
                           loc='center')
         table.scale(1, 1.5)
-        # plt.show()
         plt.savefig("../results/test.png")
 
     def save(self, filename: str):
         # filename: size + dilemma: D|C + strategy: R|H
-        """with open('../results/output.csv', 'a', newline='') as csv_file:
+        with open('../results/output.csv', 'a', newline='') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',')
-            csv_writer.writerow([filename, len(self.rows)*0.01])"""
-        with open('../results/{}.csv'.format(filename), 'a', newline='') as csv_file:
+            csv_writer.writerow([filename, len(self.rows)*0.01])
+
+    def save_baseline(self, filename: str):
+        with open('../results/{}.csv'.format(filename), 'w', newline='') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',')
             csv_writer.writerow(["Defectors", "Cooperators", "%Defectors",
                                  "%Cooperators", "Avg Fit", "Max Fit"])
