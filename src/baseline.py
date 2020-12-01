@@ -18,6 +18,7 @@ if __name__ == "__main__":
         for gen in range(2000):
             # display.graph_display(G, {"inline": True, "node_labeled": True})
             coop = res_table.add_line(G, gen)
+            
             if coop == 0:
                 lines.append(gen)
                 break
