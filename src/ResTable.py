@@ -72,7 +72,7 @@ class ResTable:
             csv_writer.writerow([filename, len(self.rows)*0.01])
 
     def save_baseline(self, filename: str):
-        with open('../results/{}.csv'.format(filename), 'w', newline='') as csv_file:
+        with open('../results/baseline/{}.csv'.format(filename), 'w', newline='') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',')
             csv_writer.writerow(["Defectors", "Cooperators", "%Defectors",
                                  "%Cooperators", "Avg Fit", "Max Fit"])
