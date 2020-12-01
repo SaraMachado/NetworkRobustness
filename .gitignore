@@ -241,4 +241,4 @@ pip-selfcheck.json
 
 
 # Normal ignore
-results/ba*
+results/baseline/ba*

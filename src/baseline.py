@@ -6,7 +6,7 @@ import random
 
 if __name__ == "__main__":
     lines = []
-    for i in range(100):
+    for i in range(1000):
         G = dilemma.gen_dilemma_uscale_graph(2000)
         res_table = rt.ResTable()
 
@@ -15,7 +15,7 @@ if __name__ == "__main__":
             G.nodes[node]["type"] = choice
             G.nodes[node]["fit"] = 0
 
-        for gen in range(2500):
+        for gen in range(10000):
             # display.graph_display(G, {"inline": True, "node_labeled": True})
             coop = res_table.add_line(G, gen)
 
