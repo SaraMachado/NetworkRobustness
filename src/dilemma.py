@@ -29,17 +29,17 @@ def node_fitness(G: nx.Graph, node_id: int) -> float:
 
 
 def gen_dilemma_uscale_graph(nodes: int) -> nx.Graph:
-    return nx.barabasi_albert_graph(nodes, random.randint(1, int(nodes / 4)), seed=None)
+    return nx.barabasi_albert_graph(nodes, 4)
 
 
-def setup(G: nx.Graph, dilemma: str):
+def setup(G: nx.Graph, dilemma: str) -> None:
     for node in G.nodes():
         G.nodes[node]["type"] = dilemma
         G.nodes[node]["fit"] = 0
 
 
 def probability_change(neighbour_fit: float, node_fit: float) -> bool:
-    beta = 0.04
+    beta = 10
     p = pow(1 + pow(exp(1), - beta * (neighbour_fit-node_fit)), -1)
     return random.random() <= p
 
@@ -68,7 +68,6 @@ def simulate(G: nx.Graph, generations: int, dilemma: str) -> bool:
 
         if is_changed(G, dilemma): return True
     return False
-    # figure out when to save image lmao
 
 
 def is_changed(G: nx.Graph, dilemma: str) -> bool:
@@ -92,12 +91,10 @@ def biggest_hubs_entropy(G: nx.Graph, changes: int, dilemma: str) -> None:
 
 
 def population_entropy(G: nx.Graph, changes: int, strategy: str, dilemma: str) -> None:
-    # TODO add all strategies if more
     if strategy == "random":
         random_entropy(G, changes, dilemma)
     elif strategy == "biggest_hubs":
         biggest_hubs_entropy(G, changes, dilemma)
-    """ Maybe with degree distribution ???? lmao"""
 
 
 def generate_results() -> dict:
@@ -115,7 +112,7 @@ def generate_results() -> dict:
 
 
 def robustness_analysis(results: dict, version: str = "") -> None:
-    """{1000: {'CR': float, 'CH': float, 'DR': float, 'DH': float},...}"""
+    # {1000: {'CR': float, 'CH': float, 'DR': float, 'DH': float},...}
     rob_cop_ran, rob_cop_hub, rob_def_ran, rob_def_hub, = [], [], [], []
 
     for size in results.keys():

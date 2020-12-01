@@ -65,7 +65,7 @@ class ResTable:
         plt.show()
 
     def save(self, filename: str):
-        """filename: size + dilemma: D|C + strategy: R|H"""
+        # filename: size + dilemma: D|C + strategy: R|H
         with open('../results/output.csv', 'a', newline='') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',')
             csv_writer.writerow([filename, len(self.rows)*0.01])

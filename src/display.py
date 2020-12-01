@@ -32,7 +32,7 @@ def graph_display(G: nx.Graph, options: dict) -> None:
         add_degree_label(G, pos)
 
     plt.axis("off")
-    #plt.savefig("../results/GD_{}.png".format(year))
+    # plt.savefig("../results/GD_{}.png".format(year))
     plt.show()
 
 
