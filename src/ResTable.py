@@ -32,6 +32,7 @@ class ResTable:
             else:
                 new_line[1] += 1
 
+        new_line[-2] /= G.number_of_nodes()
         new_line[2] = new_line[0] / G.number_of_nodes() * 100
         new_line[3] = new_line[1] / G.number_of_nodes() * 100
 
@@ -61,14 +62,19 @@ class ResTable:
                           colLabels=self.columns,
                           loc='center')
         table.scale(1, 1.5)
-        if title is not None: plt.title(title)
-        plt.show()
+        # plt.show()
+        plt.savefig("../results/test.png")
 
     def save(self, filename: str):
         # filename: size + dilemma: D|C + strategy: R|H
-        with open('../results/output.csv', 'a', newline='') as csv_file:
+        """with open('../results/output.csv', 'a', newline='') as csv_file:
             csv_writer = csv.writer(csv_file, delimiter=',')
-            csv_writer.writerow([filename, len(self.rows)*0.01])
+            csv_writer.writerow([filename, len(self.rows)*0.01])"""
+        with open('../results/{}.csv'.format(filename), 'a', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file, delimiter=',')
+            csv_writer.writerow(["Defectors", "Cooperators", "%Defectors",
+                                 "%Cooperators", "Avg Fit", "Max Fit"])
+            csv_writer.writerows(self.data)
 
     def clear(self):
         self.data.clear()
