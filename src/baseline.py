@@ -15,7 +15,7 @@ if __name__ == "__main__":
             G.nodes[node]["type"] = choice
             G.nodes[node]["fit"] = 0
 
-        for gen in range(2000):
+        for gen in range(2500):
             # display.graph_display(G, {"inline": True, "node_labeled": True})
             coop = res_table.add_line(G, gen)
 

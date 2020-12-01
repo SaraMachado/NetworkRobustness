@@ -38,7 +38,7 @@ class ResTable:
 
         self.rows.append("% Changes: {}".format(per_changes))
         self.data.append(new_line)
-        return new_line[1]
+        return (new_line[1], new_line[0])[new_line[0] < new_line[1]]
 
     def generate_table(self, title=None):
         cell_text = []

@@ -1,0 +1,12 @@
+100 graphs
+approximately 50/50 Cooperators/Defectors
+average connectivity 4
+size 2000
+
+95% of results need < 1000 generations
+Removing extremities (top 5 and bottom 5) you have an average of 260 generations
+
+Therefore we will utilize a cap of 1000 for the number of generation per simulation
+
+Results: (number of generations until either #cooperators = 0 or #defactors = 0, ordered decreasing)
+[1960, 1469, 1412, 1360, 1015, 981, 871, 700, 542, 540, 534, 527, 516, 495, 440, 435, 434, 418, 404, 401, 374, 364, 355, 353, 351, 349, 331, 327, 325, 316, 315, 302, 300, 297, 288, 283, 269, 269, 239, 234, 232, 229, 227, 227, 225, 222, 219, 218, 213, 210, 208, 204, 203, 202, 197, 195, 192, 187, 187, 182, 179, 175, 172, 168, 168, 168, 163, 149, 147, 146, 140, 138, 137, 135, 133, 132, 128, 127, 126, 119, 117, 116, 115, 113, 113, 112, 106, 103, 101, 100, 98, 98, 97, 96, 87, 69, 68, 58, 54]
