@@ -39,7 +39,7 @@ def setup(G: nx.Graph, dilemma: str) -> None:
 
 
 def probability_change(neighbour_fit: float, node_fit: float) -> bool:
-    beta = 10
+    beta = 1
     p = pow(1 + pow(exp(1), - beta * (neighbour_fit-node_fit)), -1)
     return random.random() <= p
 

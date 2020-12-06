@@ -21,23 +21,25 @@ if __name__ == "__main__":
     res_table = rt.ResTable()
     types = ["random", "biggest_hubs"]
     dilemmas = ['C', 'D']
-    generations = 50
+    generations = 5000
 
     per_changes = 0
     is_changed = False
-    for n in range(n_initial, n_final, step):
+    for n in range(n_initial, n_final + 1, step):
         G = gen_dilemma_uscale_graph(n)
         for d in dilemmas:
             setup(G, d)
-            # graph_display(G, {"inline": True, "node_labeled": True})
+
             for t in types:
                 while not is_changed and per_changes < 1:
                     per_changes += 0.01
                     G_cpy = G.copy(G)
+
                     population_entropy(G_cpy, ceil(per_changes * n), t, d)
                     is_changed = simulate(G_cpy, generations, d)
                     res_table.add_line(G_cpy, per_changes)
-                # res_table.generate_table()
+
+                res_table.save_baseline("{}{}{}".format(n, d, ('H', 'R')[t[0].upper() == 'R']))
                 res_table.save("{}{}{}".format(n, d, ('H', 'R')[t[0].upper() == 'R']))
                 res_table.clear()
                 per_changes = 0

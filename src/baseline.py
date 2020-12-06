@@ -6,7 +6,7 @@ import random
 
 if __name__ == "__main__":
     lines = []
-    for i in range(1000):
+    for i in range(100):
         G = dilemma.gen_dilemma_uscale_graph(2000)
         res_table = rt.ResTable()
 
